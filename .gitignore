@@ -1,0 +1,18 @@
+# Ignorar entorno virtual de Python
+env/
+ENV/
+venv/
+.venv/
+
+# Archivos bytecode y caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de entorno (como variables secretas)
+.env
+
+# Configuración de editores
+.vscode/
+.idea/

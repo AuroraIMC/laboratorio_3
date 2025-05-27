@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados del Análisis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados del Análisis</h1>
+        <h2>Libro: <em>{{ book }}</em></h2>
+        <h3>Idioma: {{ 'Español' if language == 'spanish' else 'Inglés' }}</h3>
+
+        {% if analysis_type == 'basic' %}
+            <section class="result-section">
+                <h3>Análisis Básico</h3>
+                <p><strong>Número de oraciones:</strong> {{ num_sentences }}</p>
+                <p><strong>Total de palabras (crudas):</strong> {{ num_words_raw }}</p>
+                <p><strong>Total de palabras (normalizadas):</strong> {{ num_words_norm }}</p>
+                <p><strong>Resumen:</strong> {{ summary }}</p>
+            </section>
+
+        {% elif analysis_type == 'sentiment' %}
+            <section class="result-section">
+                <h3>Análisis de Sentimiento</h3>
+                <p><strong>Etiqueta:</strong> {{ sentiment.label }}</p>
+                <p><strong>Confianza:</strong> {{ (sentiment.score * 100) | round(2) }}%</p>
+            </section>
+
+        {% elif analysis_type == 'theme' %}
+            <section class="result-section">
+                <h3>Tema Principal y Protagonistas</h3>
+                {% if main_topics %}
+                    <h4>Temas principales:</h4>
+                    <ul>
+                        {% for topic in main_topics %}
+                            <li>{{ topic }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if main_characters %}
+                    <h4>Protagonistas:</h4>
+                    <ul>
+                        {% for character in main_characters %}
+                            <li>{{ character }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </section>
+
+        {% elif analysis_type == 'flashcards' %}
+            <section class="result-section">
+                <h3>Flashcards de Estudio</h3>
+                <ul class="flashcards-list">
+                    {% for card in flashcards %}
+                        <li class="flashcard">
+                            <strong>Tema:</strong> {{ card.topic }}<br>
+                            <strong>Resumen:</strong> {{ card.summary }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+        {% elif analysis_type == 'qa' %}
+            <section class="result-section">
+                <h3>Preguntas y Respuestas</h3>
+                <form method="post" action="{{ url_for('result') }}">
+                    <input type="hidden" name="language" value="{{ language }}">
+                    <input type="hidden" name="book" value="{{ book }}">
+                    <input type="hidden" name="analysis_type" value="qa">
+                    <label for="question">Escribe tu pregunta:</label><br>
+                    <input type="text" id="question" name="question" required class="input-text">
+                    <br><br>
+                    <button type="submit" class="btn">Responder</button>
+                </form>
+                {% if answer %}
+                    <div class="answer-box">
+                        <h4>Respuesta:</h4>
+                        <p>{{ answer }}</p>
+                    </div>
+                {% endif %}
+            </section>
+
+        {% else %}
+            <p>Tipo de análisis no reconocido.</p>
+        {% endif %}
+
+        <br>
+        <a class="link" href="{{ url_for('index') }}">← Volver al inicio</a>
+    </div>
+</body>
+</html>

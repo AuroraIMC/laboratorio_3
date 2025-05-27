@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seleccionar Tipo de Análisis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Selecciona el tipo de análisis para <em>"{{ book }}"</em></h1>
+        <form action="{{ url_for('result') }}" method="post" class="form-box">
+            <input type="hidden" name="language" value="{{ language }}">
+            <input type="hidden" name="book" value="{{ book }}">
+            <button class="btn" name="analysis_type" value="basic">🔹 Análisis básico</button>
+            <button class="btn" name="analysis_type" value="sentiment">🔹 Análisis de sentimientos</button>
+            <button class="btn" name="analysis_type" value="theme">🔹 Temas y protagonistas</button>
+            <button class="btn" name="analysis_type" value="flashcards">🔹 Flashcards</button>
+            <button class="btn" name="analysis_type" value="qa">🔹 Preguntas y respuestas</button>
+        </form>
+        <br>
+        <a class="link" href="{{ url_for('select_book') }}">← Volver a la selección de libros</a>
+    </div>
+</body>
+</html>

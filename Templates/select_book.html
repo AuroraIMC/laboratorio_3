@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seleccionar Libro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="container">
+    <h1 class="title">Libros en {{ 'Español' if language == 'spanish' else 'Inglés' }}</h1>
+
+    <div class="book-list">
+        {% for book in books %}
+        <form action="{{ url_for('select_analysis') }}" method="post" class="book-form">
+            <input type="hidden" name="language" value="{{ language }}">
+            <input type="hidden" name="book" value="{{ book }}">
+            <button type="submit" class="button">Seleccionar "{{ book }}"</button>
+        </form>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('index') }}" class="back-link">← Volver</a>
+</body>
+</html>

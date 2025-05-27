@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Respuesta</title>
+</head>
+<body>
+    <h2>Pregunta:</h2>
+    <p>{{ question }}</p>
+
+    <h2>Respuesta:</h2>
+    <p>{{ answer }}</p>
+
+    <p><em>Confianza: {{ (score * 100) | round(2) }}%</em></p>
+
+    <br>
+    <a href="{{ url_for('index') }}">← Volver al inicio</a>
+</body>
+</html>
